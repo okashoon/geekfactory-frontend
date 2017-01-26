@@ -6,10 +6,28 @@ $b-font: 'Ubuntu',
 sans-serif;
 $main-font: 'roboto slab',
 serif;
+//colored box before titles abstract class to extend upon it
+.colored-box {
+    content: "";
+    float: left;
+    width: 40px;
+    height: 80px;
+    margin: 5px;
+}
+
+//float-sections mixin
+@mixin float-left-section($size) {
+    float: left;
+    width: $size;
+    padding-right: 5%;
+    box-sizing: border-box;
+}
+
 body {
     margin: 10px auto;
     font-size: 120%;
     font-family: $main-font;
+    padding: 0 5%;
 }
 
 h1 {
@@ -23,15 +41,6 @@ h3 {
     font-size: 1.3em;
 }
 
-//colored box before titles abstract class to extend upon it
-.colored-box {
-    content: "";
-    float: left;
-    width: 40px;
-    height: 80px;
-    margin: 5px;
-}
-
 p {
     margin-bottom: 0px;
 }
@@ -41,10 +50,7 @@ header {
     padding-bottom: 30px;
     border-bottom: 1px solid black;
     #title {
-        float: left;
-        width: 33.333%;
-        margin-bottom: 20px;
-        box-sizing: border-box;
+        @include float-left-section(33.333%);
         #name {
             margin-bottom: 0px;
             &:before {
@@ -56,19 +62,19 @@ header {
             margin-left: 50px;
         }
     }
-    #profile-pic {
-        border-radius: 50%;
-        border: 10px solid darkblue;
-        width: 20%;
-        float: left;
+    #pic-container {
+        @include float-left-section(33.3333%);
+        text-align: center;
+        margin-top: 50px;
+        #profile-pic {
+            border-radius: 50%;
+            border: 10px solid darkblue;
+        }
     }
     #contacts {
-        float: left;
+        @include float-left-section(33.3333%);
         margin-top: 50px;
-        margin-right: 30px;
         list-style-type: none;
-        width: 33.3333333%;
-        box-sizing: border-box;
         li {
             margin-bottom: 1.5em;
             img {
@@ -89,18 +95,9 @@ main {
     margin-bottom: 50px;
 }
 
-#left {
-    display: inline-block;
-    width: 40%;
-    box-sizing: border-box;
-    margin-right: 5%;
-}
-
+#left,
 #right {
-    display: inline-block;
-    width: 40%;
-    box-sizing: border-box;
-    margin-left: 5%;
+    @include float-left-section(50%);
 }
 
 #duties {
@@ -148,34 +145,27 @@ b {
 }
 
 @media(max-width: 1170px) {
-    #title {
+    header #title {
         width: 100%;
     }
-    #profile-pic {
+    header #pic-container {
         width: 45%;
-        max-width: 300px;
         margin-left: 20px;
         margin-right: 20px;
     }
-    #contacts {
+    header #contacts {
         width: 45%;
     }
 }
 
 @media(max-width: 768px) {
-    #title {
+    header #title {
         width: 100%;
     }
-    #profile-pic {
-        width: 50%;
-        max-width: 200px;
-        margin-left: auto;
-        margin-right: auto;
+    header #pic-container {
+        width: 100%;
     }
-    #pic-container {
-        text-align: center;
-    }
-    #contacts {
+    header #contacts {
         width: 100%;
     }
     #left {
