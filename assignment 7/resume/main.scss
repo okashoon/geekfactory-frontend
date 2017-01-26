@@ -23,6 +23,15 @@ h3 {
     font-size: 1.3em;
 }
 
+//colored box before titles abstract class to extend upon it
+.colored-box {
+    content: "";
+    float: left;
+    width: 40px;
+    height: 80px;
+    margin: 5px;
+}
+
 p {
     margin-bottom: 0px;
 }
@@ -39,11 +48,7 @@ header {
         #name {
             margin-bottom: 0px;
             &:before {
-                content: "";
-                float: left;
-                width: 40px;
-                height: 90px;
-                margin: 5px;
+                @extend .colored-box;
                 background: $box-color-name;
             }
         }
@@ -122,11 +127,7 @@ time {
     font-style: italic;
     color: gray;
     &:before {
-        content: "";
-        float: left;
-        width: 40px;
-        height: 80px;
-        margin: 5px;
+        @extend .colored-box;
         background: $box-color-main;
     }
 }

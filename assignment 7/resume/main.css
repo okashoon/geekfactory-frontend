@@ -12,6 +12,13 @@ h3 {
   margin-top: 0px;
   font-size: 1.3em; }
 
+.colored-box, header #title #name:before, time:before {
+  content: "";
+  float: left;
+  width: 40px;
+  height: 80px;
+  margin: 5px; }
+
 p {
   margin-bottom: 0px; }
 
@@ -27,11 +34,6 @@ header {
     header #title #name {
       margin-bottom: 0px; }
       header #title #name:before {
-        content: "";
-        float: left;
-        width: 40px;
-        height: 90px;
-        margin: 5px;
         background: #1e90ff; }
     header #title #intro {
       margin-left: 50px; }
@@ -92,11 +94,6 @@ time {
   font-style: italic;
   color: gray; }
   time:before {
-    content: "";
-    float: left;
-    width: 40px;
-    height: 80px;
-    margin: 5px;
     background: #101b5b; }
 
 p {
