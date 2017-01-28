@@ -1,0 +1,177 @@
+$box-color-name: #1e90ff;
+$box-color-main: #101b5b;
+$h1-font: 'Titillium Web',
+sans-serif;
+$b-font: 'Ubuntu',
+sans-serif;
+$main-font: 'roboto slab',
+serif;
+//colored box before titles abstract class to extend upon it
+.colored-box {
+    content: "";
+    float: left;
+    width: 40px;
+    height: 80px;
+    margin: 5px;
+}
+
+//float-sections mixin
+@mixin float-left-section($size) {
+    float: left;
+    width: $size;
+    padding-right: 5%;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 10px auto;
+    font-size: 120%;
+    font-family: $main-font;
+    padding: 0 5%;
+}
+
+h1 {
+    font-family: $h1-font;
+}
+
+h2,
+h3 {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    font-size: 1.3em;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+header {
+    overflow: hidden;
+    padding-bottom: 30px;
+    border-bottom: 1px solid black;
+    #title {
+        @include float-left-section(33.333%);
+        #name {
+            margin-bottom: 0px;
+            &:before {
+                @extend .colored-box;
+                background: $box-color-name;
+            }
+        }
+        #intro {
+            margin-left: 50px;
+        }
+    }
+    #pic-container {
+        @include float-left-section(33.3333%);
+        text-align: center;
+        margin-top: 50px;
+        #profile-pic {
+            border-radius: 50%;
+            border: 10px solid darkblue;
+        }
+    }
+    #contacts {
+        @include float-left-section(33.3333%);
+        margin-top: 50px;
+        list-style-type: none;
+        li {
+            margin-bottom: 1.5em;
+            img {
+                display: inline-block;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            a {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+    }
+}
+
+main {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+#left,
+#right {
+    @include float-left-section(50%);
+}
+
+#duties {
+    margin-left: 50px;
+}
+
+#skills {
+    list-style-type: none;
+    li {
+        margin-bottom: 20px;
+    }
+    span {
+        margin-right: 30px;
+    }
+    progress {
+        height: 25px;
+        width: 250px;
+        margin-top: 7px;
+        margin-right: 175px;
+    }
+}
+
+time {
+    font-style: italic;
+    color: gray;
+    &:before {
+        @extend .colored-box;
+        background: $box-color-main;
+    }
+}
+
+p {
+    word-wrap: break-word;
+}
+
+.work {
+    margin-top: 20px;
+    span {
+        float: right;
+    }
+}
+
+b {
+    font-family: $b-font;
+}
+
+@media(max-width: 1170px) {
+    header #title {
+        width: 100%;
+    }
+    header #pic-container {
+        width: 45%;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    header #contacts {
+        width: 45%;
+    }
+}
+
+@media(max-width: 768px) {
+    header #title {
+        width: 100%;
+    }
+    header #pic-container {
+        width: 100%;
+    }
+    header #contacts {
+        width: 100%;
+    }
+    #left {
+        width: 100%
+    }
+    #right {
+        width: 100%
+    }
+}
