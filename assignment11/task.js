@@ -6,7 +6,7 @@ var Task = function (category, title, priority, estimate) {
     this.spent = 0;
     this.remaining = this.estimate;
 }
-Task.prototype = Object.create(Task.prototype);
+
 Task.prototype.track = function (n) {
     if (n > 0) {
         this.spent += n;
