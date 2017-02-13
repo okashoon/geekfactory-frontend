@@ -12,13 +12,14 @@ Task.prototype.track = function (n) {
         this.spent += n;
         this.remaining = this.estimate - this.spent;
     }
-Task.prototype.done = function(){
-    if(this.remaining === 0) return true;
+}
+Task.prototype.done = function () {
+    if (this.remaining === 0) return true;
     return false;
 }
 
-Task.prototype.complete = function(){
+Task.prototype.complete = function () {
     this.remaining = 0;
 }
 
-}
+
