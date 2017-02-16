@@ -1,10 +1,12 @@
 
 var createTaskManager = function () {
     var tasks = [];
+    var onChangeCallback;
 
     function create(category, title, priority, estimate) {
         var task = new Task(category, title, priority, estimate);
         tasks.push(task);
+        onChangeCallback && onChangeCallback(tasks);
         return task;
     };
 
@@ -38,7 +40,12 @@ var createTaskManager = function () {
 
         if (index >= 0 && index < tasks.length) {
             tasks.splice(index, 1);
+            onChangeCallback && onChangeCallback(tasks);
         }
+    }
+
+    function onChange(callback){
+        onChangeCallback = callback;
     }
 
     function _filter(predicte) {
@@ -54,7 +61,8 @@ var createTaskManager = function () {
         find: find,
         get: get,
         getAll: getAll,
-        remove: remove
+        remove: remove,
+        onChange: onChange
     };
 };
 
