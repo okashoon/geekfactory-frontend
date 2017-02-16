@@ -55,7 +55,7 @@
 // })
 
 
-(function () {
+
 
     "use strict";
 
@@ -63,7 +63,6 @@
     var tasksContainer = document.querySelector('#tasks');
     
     var taskManager = createTaskManager();
-    loadTasks();
 
     form && form.addEventListener('submit', addTask);
     taskManager.onChange(update);
@@ -124,4 +123,3 @@
             })
         }
     }
-})();

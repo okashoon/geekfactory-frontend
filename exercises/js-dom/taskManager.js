@@ -44,6 +44,11 @@ var createTaskManager = function () {
         }
     }
 
+    function editTask(task, property, value){
+        task[property] = value;
+        onChangeCallback && onChangeCallback(tasks);
+    }
+
     function onChange(callback){
         onChangeCallback = callback;
     }
@@ -62,7 +67,8 @@ var createTaskManager = function () {
         get: get,
         getAll: getAll,
         remove: remove,
-        onChange: onChange
+        onChange: onChange,
+        editTask: editTask
     };
 };
 
