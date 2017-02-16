@@ -123,7 +123,11 @@ function createTaskRow(task, edit) {
         editButton.innerHTML = "Edit";
         tr.appendChild(editButton);
         editButton.addEventListener('click', function(){
-            
+            //remove the 'readOnly' attribute from the input elements
+            var inputs = document.querySelectorAll("#edit-tasks input");
+            for(var i = 0; i < inputs.length; i++){
+             inputs[i].removeAttribute('readOnly');
+            }
         });
     }
     return tr;
