@@ -11,7 +11,7 @@
 //     var priority = form.elements.namedItem("priority").value;
 //     var estimate = form.elements.namedItem("estimate").value;
 
-   
+
 
 //     taskManager.onChange(update);
 
@@ -57,69 +57,97 @@
 
 
 
-    "use strict";
+"use strict";
 
-    var form = document.querySelector('form');
-    var tasksContainer = document.querySelector('#tasks');
-    
-    var taskManager = createTaskManager();
+var form = document.querySelector('form');
+var tasksContainer = document.querySelector('#tasks');
+var editTasksContainer = document.querySelector('#edit-tasks')
 
-    form && form.addEventListener('submit', addTask);
-    taskManager.onChange(update);
+var taskManager = createTaskManager();
 
-    function addTask(event) {
-        event.preventDefault();
-        var task = {};
-        event.target.querySelectorAll('input:not([type="submit"]').forEach(function (input) {
-            task[input.name] = input.value;
-            input.value = null;
-        });
-        taskManager.create(task.category, task.title, task.priority, task.estimate);
+form && form.addEventListener('submit', addTask);
+taskManager.onChange(update);
+
+function addTask(event) {
+    event.preventDefault();
+    var task = {};
+    event.target.querySelectorAll('input:not([type="submit"]').forEach(function (input) {
+        task[input.name] = input.value;
+        input.value = null;
+    });
+    taskManager.create(task.category, task.title, task.priority, task.estimate);
+}
+
+function update(tasks) {
+    while (tasksContainer.hasChildNodes()) {
+        tasksContainer.removeChild(tasksContainer.lastChild);
+        //delete also the editTask row
+       //editTasksContainer.removeChild(editTasksContainer.lastChild);
     }
 
-    function update(tasks) {
-        while (tasksContainer.hasChildNodes()) {
-            tasksContainer.removeChild(tasksContainer.lastChild);
+    tasks.forEach(function (task) {
+        tasksContainer.appendChild(createTaskRow(task));
+        //task that will be inserted into the editing table
+        var editableTask = task;
+        //loop through editableTask and convert the string properties to input elements with values and names of those properties
+        for (var key in editableTask) {
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = key;
+            input.value = editableTask[key];
+            editableTask[key] = input;
         }
+        editTasksContainer.appendChild(createTaskRow(editableTask, "edit"));
+    });
 
-        tasks.forEach(function (task) {
-            tasksContainer.appendChild(createTaskRow(task));
-        });
-        
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
-    function createTaskRow(task) {
-        var tr = document.createElement('tr');
-        tr.appendChild(createTableCell(task.category));
-        tr.appendChild(createTableCell(task.title));
-        tr.appendChild(createTableCell(task.priority));
-        tr.appendChild(createTableCell(task.estimate));
+//edit is a second argument that tells if that row belongs to the main table or edit table
+function createTaskRow(task, edit) {
+    var tr = document.createElement('tr');
+    tr.appendChild(createTableCell(task.category));
+    tr.appendChild(createTableCell(task.title));
+    tr.appendChild(createTableCell(task.priority));
+    tr.appendChild(createTableCell(task.estimate));
+    if (edit != "edit") {
         tr.appendChild(createTableCell(task.spent));
         tr.appendChild(createTableCell(task.remaining));
         tr.appendChild(createTableCell(task.done() && '&#10004;'));
         var delButton = document.createElement("button");
         delButton.innerHTML = "Delete";
         tr.appendChild(delButton);
-        delButton.addEventListener('click', function(){taskManager.remove(task)});
-        
-        return tr;
+        delButton.addEventListener('click', function () { taskManager.remove(task) });
+
+        var editButton = document.createElement("button");
+        editButton.innerHTML = "Edit";
+        tr.appendChild(editButton);
+        editButton.addEventListener('click', function(){
+            
+        });
+    }
+    return tr;
+}
+
+function createTableCell(property) {
+    var td = document.createElement('td');
+    //if the property passed is an element node(in case we are passing editableTask property)
+    if(property.nodeType === 1){
+        property.setAttribute('readOnly',true);
+        td.appendChild(property);
+    } else {
+        var property = document.createTextNode(property);
+        td.appendChild(property);
     }
 
-    function createTableCell(text) {
-        var td = document.createElement('td');
-        if (text) {
-            var text = document.createTextNode(text);
-            td.appendChild(text);
-        }
-        return td;
-    }
+    return td;
+}
 
-    function loadTasks(){
-        if (typeof window.localStorage !== 'undefined'){
-            var tasks = JSON.parse(window.localStorage.getItem('tasks'));
-            tasks && tasks.forEach(function (task){
-                taskManager.create(task.category, task.title, task.priority, task.estimate);
-            })
-        }
+function loadTasks() {
+    if (typeof window.localStorage !== 'undefined') {
+        var tasks = JSON.parse(window.localStorage.getItem('tasks'));
+        tasks && tasks.forEach(function (task) {
+            taskManager.create(task.category, task.title, task.priority, task.estimate);
+        })
     }
+}
