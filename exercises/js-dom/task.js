@@ -5,6 +5,7 @@ var Task = function (category, title, priority, estimate) {
     this.estimate = estimate;
     this.spent = 0;
     this.remaining = this.estimate;
+    this.editable = false;
 }
 
 Task.prototype.track = function (n) {

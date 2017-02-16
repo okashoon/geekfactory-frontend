@@ -82,22 +82,15 @@ function update(tasks) {
     while (tasksContainer.hasChildNodes()) {
         tasksContainer.removeChild(tasksContainer.lastChild);
         //delete also the editTask row
-       //editTasksContainer.removeChild(editTasksContainer.lastChild);
+        editTasksContainer.removeChild(editTasksContainer.lastChild);
     }
+
 
     tasks.forEach(function (task) {
         tasksContainer.appendChild(createTaskRow(task));
-        //task that will be inserted into the editing table
-        var editableTask = task;
-        //loop through editableTask and convert the string properties to input elements with values and names of those properties
-        for (var key in editableTask) {
-            var input = document.createElement("input");
-            input.type = "text";
-            input.name = key;
-            input.value = editableTask[key];
-            editableTask[key] = input;
-        }
-        editTasksContainer.appendChild(createTaskRow(editableTask, "edit"));
+        
+        editTasksContainer.appendChild(createTaskRow(task, "edit"));
+        
     });
 
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -106,14 +99,19 @@ function update(tasks) {
 //edit is a second argument that tells if that row belongs to the main table or edit table
 function createTaskRow(task, edit) {
     var tr = document.createElement('tr');
-    tr.appendChild(createTableCell(task.category));
-    tr.appendChild(createTableCell(task.title));
-    tr.appendChild(createTableCell(task.priority));
-    tr.appendChild(createTableCell(task.estimate));
+    tr.appendChild(createTableCell(task.category, edit, "category"));
+    tr.appendChild(createTableCell(task.title, edit, "title"));
+    tr.appendChild(createTableCell(task.priority, edit, "priority"));
+    tr.appendChild(createTableCell(task.estimate, edit, "estimate"));
+    if(edit === "edit"){
+        var applyButton = document.createElement('button');
+        applyButton.innerHTML = " Apply changes";
+        tr.appendChild(applyButton);
+    }
     if (edit != "edit") {
-        tr.appendChild(createTableCell(task.spent));
-        tr.appendChild(createTableCell(task.remaining));
-        tr.appendChild(createTableCell(task.done() && '&#10004;'));
+        tr.appendChild(createTableCell(task.spent, edit));
+        tr.appendChild(createTableCell(task.remaining, edit));
+        tr.appendChild(createTableCell(task.done() && '&#10004;', edit));
         var delButton = document.createElement("button");
         delButton.innerHTML = "Delete";
         tr.appendChild(delButton);
@@ -122,30 +120,39 @@ function createTaskRow(task, edit) {
         var editButton = document.createElement("button");
         editButton.innerHTML = "Edit";
         tr.appendChild(editButton);
-        editButton.addEventListener('click', function(){
-            //remove the 'readOnly' attribute from the input elements
+
+        function edit(){
             var inputs = document.querySelectorAll("#edit-tasks input");
-            for(var i = 0; i < inputs.length; i++){
-             inputs[i].removeAttribute('readOnly');
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].removeAttribute('readOnly');
+
             }
-        });
-    }
-    return tr;
+        }
+        editButton.addEventListener('click', edit);
+        
+        
+}
+return tr;
 }
 
-function createTableCell(property) {
+function createTableCell(value, edit, property) {
     var td = document.createElement('td');
-    //if the property passed is an element node(in case we are passing editableTask property)
-    if(property.nodeType === 1){
-        property.setAttribute('readOnly',true);
-        td.appendChild(property);
+    
+    if (edit === "edit") {
+        var input = document.createElement('input');
+        input.value = value;
+        input.name = property;
+        input.setAttribute('readOnly', true);
+        td.appendChild(input);
+
     } else {
-        var property = document.createTextNode(property);
-        td.appendChild(property);
+        var value = document.createTextNode(value);
+        td.appendChild(value);
     }
 
     return td;
 }
+
 
 function loadTasks() {
     if (typeof window.localStorage !== 'undefined') {
