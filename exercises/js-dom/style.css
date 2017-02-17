@@ -42,5 +42,9 @@ tbody td{
 }
 
 table input[readOnly] {
+    color:black;
     background-color: lightgrey;
+}
+table input{
+    color: blue;
 }
