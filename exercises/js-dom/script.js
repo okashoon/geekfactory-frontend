@@ -101,13 +101,11 @@ function update(tasks) {
 //edit is a second argument that tells if that row belongs to the main table or edit table
 function createTaskRow(task, edit) {
     var tr = document.createElement('tr');
-    tr.id = "row" + taskManager.getTaskOrder(task);
-    
-    
     tr.appendChild(createTableCell(task.category, edit, "category"));
     tr.appendChild(createTableCell(task.title, edit, "title"));
     tr.appendChild(createTableCell(task.priority, edit, "priority"));
     tr.appendChild(createTableCell(task.estimate, edit, "estimate"));
+    // elements that will only be appended to the editTasksContainer
     if(edit === "edit"){
         var applyButton = document.createElement('button');
         applyButton.innerHTML = " Apply changes";
@@ -115,19 +113,19 @@ function createTaskRow(task, edit) {
         applyButton.addEventListener('click', editTask)
 
         function editTask(event){
-            var rowId = event.target.parentNode.id;
-            console.log(rowId);
-            var query = "#edit-tasks #" + rowId +" input";
-            console.log(query);
-            var inputs = document.querySelectorAll(query);
+            //get rowIndex to apply the edits to the proper task
+            var rowIndex = event.target.parentNode.rowIndex - 1;
+            var table  = document.getElementById("edit-tasks");
+            var inputs = table.rows[rowIndex].getElementsByTagName("input");
+            // loop through every input value and apply it to the task
             for(var i = 0; i < inputs.length; i++){
-                
                 taskManager.editTask(task, inputs[i].name, inputs[i].value);
             }
            
         }
 
     }
+    //elements that will be appended to the main table
     if (edit != "edit") {
         tr.appendChild(createTableCell(task.spent, edit));
         tr.appendChild(createTableCell(task.remaining, edit));
@@ -141,14 +139,19 @@ function createTaskRow(task, edit) {
         editButton.innerHTML = "Edit";
         tr.appendChild(editButton);
 
-        function allowEdit(){
-            var inputs = document.querySelectorAll("#edit-tasks input");
+        editButton.addEventListener('click', allowEdit);
+        
+
+        function allowEdit(event){
+            //get row index, to allow editing only that row
+            var rowIndex = event.target.parentNode.rowIndex - 1;
+            var table  = document.getElementById("edit-tasks");
+            var inputs = table.rows[rowIndex].getElementsByTagName("input");
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].removeAttribute('readOnly');
 
             }
         }
-        editButton.addEventListener('click', allowEdit);
         
         
 }

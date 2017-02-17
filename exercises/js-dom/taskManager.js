@@ -43,9 +43,11 @@ var createTaskManager = function () {
             onChangeCallback && onChangeCallback(tasks);
         }
     }
+    //function to return the order of task inside the tasks array
     function getTaskOrder(task){
         return tasks.indexOf(task);
     }
+    
     function editTask(task, property, value){
         task[property] = value;
         onChangeCallback && onChangeCallback(tasks);
