@@ -47,9 +47,11 @@ var createTaskManager = function () {
     function getTaskOrder(task){
         return tasks.indexOf(task);
     }
-    
+
     function editTask(task, property, value){
+        
         task[property] = value;
+        
         onChangeCallback && onChangeCallback(tasks);
     }
 

@@ -4,7 +4,7 @@ var Task = function (category, title, priority, estimate) {
     this.priority = priority;
     this.estimate = estimate;
     this.spent = 0;
-    this.remaining = this.estimate;
+    this.remaining = this.estimate - this.spent;
     this.editable = false;
 }
 
