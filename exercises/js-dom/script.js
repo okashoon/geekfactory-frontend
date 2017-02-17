@@ -65,8 +65,10 @@ var editTasksContainer = document.querySelector('#edit-tasks')
 
 var taskManager = createTaskManager();
 
+
 form && form.addEventListener('submit', addTask);
 taskManager.onChange(update);
+loadTasks();
 
 function addTask(event) {
     event.preventDefault();
