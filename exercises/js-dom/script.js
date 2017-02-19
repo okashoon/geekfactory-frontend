@@ -54,32 +54,40 @@ function createTaskRow(task) {
     tr.appendChild(editButton);
 
     editButton.addEventListener('click', allowEdit);
+    //creating a temporary task to change and send to task manager
     var tempTask = {}
     tempTask = task;
     function allowEdit(event) {
-        console.log(task);
-
         var editForm = document.querySelector('#edit-task')
         editForm.setAttribute('style', 'display: block');
         var completed = editForm.elements["completed"];
-        //completed.setAttribute("max", task.estimate);
+        completed.setAttribute("max", task.estimate);
+        //setting custom message for completed
+        completed.addEventListener('invalid', function (e) {
+            if (completed.validity.rangeOverflow) {
+                e.target.setCustomValidity("How can completed be MORE than estiamted?!");
+            } else { e.target.setCustomValidity("") }
+        });
+
         var inputs = editForm.querySelectorAll('input:not([type="submit"])');
+        //setting values for the edit form
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].value = task[inputs[i].name];
-            console.log(inputs[i].name);
-            console.log(inputs[i].value);
         }
         editForm.addEventListener('submit', editTask);
 
         function editTask(e) {
             e.preventDefault();
-
+            //editing category, title, priority and estimate
             for (var i = 0; i < inputs.length; i++) {
                 taskManager.editTask(tempTask, inputs[i].name, inputs[i].value);
             }
             var completed = editForm.elements["completed"];
+            //editing completed
             taskManager.setCompleted(tempTask, parseInt(completed.value));
+            //clearing tempTask, and hiding the editForm
             tempTask = {};
+            editForm.setAttribute('style', 'display: none');
         }
     }
 

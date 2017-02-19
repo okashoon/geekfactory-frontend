@@ -3,8 +3,8 @@ var Task = function (category, title, priority, estimate, spent) {
     this.title = title;
     this.priority = priority;
     this.estimate = estimate;
-    this.spent = spent;
-    this.remaining = estimate -spent;
+    this.spent = spent || 0;
+    this.remaining = this.estimate - this.spent;
     this.editable = false;
 }
 
