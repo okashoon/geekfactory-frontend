@@ -41,10 +41,17 @@ tbody td{
     background-color: lightblue;
 }
 
-table input[readOnly] {
-    color:black;
-    background-color: lightgrey;
+#edit-task{
+    margin-top: 30px;
+    border: black solid 1px;
 }
-table input{
-    color: blue;
+
+#edit-task input{
+    width: 100px;
+    margin: 10px;
+}
+
+#edit-task label{
+    display: inline-block;
+    width:150px;
 }

@@ -1,10 +1,10 @@
-var Task = function (category, title, priority, estimate) {
+var Task = function (category, title, priority, estimate, spent) {
     this.category = category;
     this.title = title;
     this.priority = priority;
     this.estimate = estimate;
-    this.spent = 0;
-    this.remaining = this.estimate - this.spent;
+    this.spent = spent;
+    this.remaining = estimate -spent;
     this.editable = false;
 }
 

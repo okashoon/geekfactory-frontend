@@ -3,8 +3,8 @@ var createTaskManager = function () {
     var tasks = [];
     var onChangeCallback;
 
-    function create(category, title, priority, estimate) {
-        var task = new Task(category, title, priority, estimate);
+    function create(category, title, priority, estimate, spent) {
+        var task = new Task(category, title, priority, estimate, spent);
         tasks.push(task);
         onChangeCallback && onChangeCallback(tasks);
         return task;
@@ -43,19 +43,23 @@ var createTaskManager = function () {
             onChangeCallback && onChangeCallback(tasks);
         }
     }
-    //function to return the order of task inside the tasks array
-    function getTaskOrder(task){
-        return tasks.indexOf(task);
-    }
 
-    function editTask(task, property, value){
-        
+    function editTask(task, property, value) {
+
         task[property] = value;
-        
+
         onChangeCallback && onChangeCallback(tasks);
     }
 
-    function onChange(callback){
+    function setCompleted(task, n) {
+        if (n > 0 && n <= task.estimate) {
+            task.spent = n;
+            task.remaining = task.estimate - task.spent;
+            onChangeCallback && onChangeCallback(tasks);
+        } else {window.alert("completed must be less than estimate!!")}
+    }
+
+    function onChange(callback) {
         onChangeCallback = callback;
     }
 
@@ -75,7 +79,7 @@ var createTaskManager = function () {
         remove: remove,
         onChange: onChange,
         editTask: editTask,
-        getTaskOrder : getTaskOrder
+        setCompleted: setCompleted
     };
 };
 
