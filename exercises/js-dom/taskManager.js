@@ -52,11 +52,11 @@ var createTaskManager = function () {
     }
 
     function setCompleted(task, n) {
-        if (n > 0 && n <= task.estimate) {
+        if (n >= 0 && n <= task.estimate) {
             task.spent = n;
             task.remaining = task.estimate - task.spent;
             onChangeCallback && onChangeCallback(tasks);
-        } else {window.alert("completed must be less than estimate!!")}
+        } 
     }
 
     function onChange(callback) {

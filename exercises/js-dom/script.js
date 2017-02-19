@@ -56,11 +56,16 @@
         editButton.addEventListener('click', allowEdit);
 
         function allowEdit(event) {
+            console.log(task);
             var editForm = document.querySelector('#edit-task')
             editForm.setAttribute('style', 'display: block');
+            var completed = editForm.elements["completed"];
+            //completed.setAttribute("max", task.estimate);
             var inputs = editForm.querySelectorAll('input:not([type="submit"])');
             for (var i = 0; i < inputs.length; i++) {
                 inputs[i].value = task[inputs[i].name];
+                console.log(inputs[i].name);
+                console.log(inputs[i].value);
             }
             editForm.addEventListener('submit', editTask);
 
