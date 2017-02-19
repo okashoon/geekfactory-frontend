@@ -45,8 +45,14 @@ var createTaskManager = function () {
     }
 
     function editTask(task, property, value) {
-
+        
         task[property] = value;
+
+        var taskIndex;
+        for(var i =0; i < tasks.length;i++){
+            if(tasks[i] === task) taskIndex = i;
+        }
+        tasks[taskIndex] = task;
 
         onChangeCallback && onChangeCallback(tasks);
     }
