@@ -1,4 +1,5 @@
 class Task{
+    
     constructor(
         public category: string,
         public title: string,

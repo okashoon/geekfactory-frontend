@@ -67,7 +67,7 @@ class TaskManager {
         } 
     }
 
-    onChange(callback: (tasks: Array<Task>) => {void}): void {
+    onChange(callback: (tasks: Array<Task>) => void): void {
         this.onChangeCallback = callback;
     }
 
