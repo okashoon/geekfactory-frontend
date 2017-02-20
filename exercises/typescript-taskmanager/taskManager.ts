@@ -1,4 +1,4 @@
-
+/// <reference path="task.ts" />
 class TaskManager {
     //putting tasks inside the constructor function to be private, and making getters and setters for it
     pushTask: (task: Task) => void;
