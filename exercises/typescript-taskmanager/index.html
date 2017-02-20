@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!--<html>
+
+<head>
+    <title>GF Todo App</title>
+
+</head>
+
+<body>
+    <header>
+        <h1>GF Todo App</h1>
+    </header>
+    <main>
+        <section>
+        <h2>New task:</h2>
+        <form id="new-todo">
+            <label>Category:<input name="category" type="text" ></label>
+            <label>title:<input name="title" type="text"  ></label>
+            <label>priority:<input name="priority" type="number" min="0" max="3"  ></label>
+            <label>estimate:<input name="estimate" type="text" min="0"  ></label>
+            <button id="add">Add</button>
+        </form>
+        </section>
+        <h2>Tasks</h2>
+        <table id="todo-table">
+            <thead>
+                <tr>
+                    <td>Category </td>
+                    <td>Title </td>
+                    <td>Priority </td>
+                    <td>estimate </td>
+                    <td>Completed </td>
+                    <td>Remaining </td>
+                    <td>Done </td>
+                </tr>
+            </thead>
+            <tbody>
+
+
+            </tbody>
+        </table>
+    </main>
+
+    <script src="task.js"></script>
+    <script src="taskManager.js"></script>
+    <script src="script.js"></script>
+    
+
+</body>
+
+</html>-->
+
+
+
+
+<html lang="en">
+
+<head>
+    <title>GF Todo App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>GF Todo App</h1>
+    </header>
+    <main>
+        <section>
+            <h2>New task:</h2>
+            <form id="new-todo">
+                <label>Category: <input name="category" type="text" required></label>
+                <label>Title: <input name="title" type="text" required></label>
+                <label>Priority: <input name="priority" type="number" min="0" max="3" required></label>
+                <label>Estimate: <input name="estimate" type="number" min="0" required></label>
+                <input type="submit" value="Add" id="add-button">
+            </form>
+        </section>
+        <section>
+            <h2>Tasks:</h2>
+            <table >
+                <thead>
+                    <tr>
+                        <td>Category</td>
+                        <td>Title</td>
+                        <td>Priority</td>
+                        <td>Estimate</td>
+                        <td>Completed</td>
+                        <td>Remaining</td>
+                        <td>Done</td>
+                        
+                    </tr>
+                </thead>
+                <tbody id="tasks">
+                </tbody>
+            </table>
+
+            <form id="edit-task" style="display: none">
+                <label>Category: <input name="category" type="text" required></label>
+                <label>Title: <input name="title" type="text" required></label>
+                <label>Priority: <input name="priority" type="number" min="0" max="3" required></label>
+                <label>Estimate: <input name="estimate" type="number" min="0" required></label>
+                <label>Completed: <input name="completed" type="number" min="0" ></label>
+                <input type="submit" value="Apply Changes" id="apply-button">
+            </form>
+
+        </section>
+    </main>
+    <script src="task.js"></script>
+    <script src="taskManager.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+#new-todo{
+    width: 500px;
+    height: 250px;
+    border: black solid 1px;
+    
+    
+}
+
+#new-todo label{
+    display: block;
+    margin: 30px 20px;
+}
+
+#new-todo label input{
+    position: absolute;
+    left: 100px;
+}
+
+#add-button{
+    position: relative;
+    left: 350px;
+    bottom: 150px;
+    height: 70px;
+    width: 100px;
+}
+
+table td{
+    padding: 5px;
+    border: black solid 1px;
+}
+
+button{
+    height: 30px;
+}
+
+thead td{
+    background-color: blue;
+    color: white;
+}
+tbody td{
+    background-color: lightblue;
+}
+
+#edit-task{
+    margin-top: 30px;
+    border: black solid 1px;
+}
+
+#edit-task input{
+    width: 100px;
+    margin: 10px;
+}
+
+#edit-task label{
+    display: inline-block;
+    width:150px;
+}
