@@ -1,12 +1,28 @@
 
 class TaskManager {
-    public tasks: Array<Task> = [];
-    onChangeCallback(tasks: Array<Task>): void{};
+    //putting tasks inside the constructor function to be private, and making getters and setters for it
+    pushTask: (task: Task) => void;
+    getTasks: () => Array<Task>;
+    constructor() {
+        var tasks: Array<Task> = new Array;
+        this.getTasks = function () {
+            return tasks;
+        }
+        this.pushTask = function (task) {
+            tasks.push(task);
+        
+        }
+
+    }
+
+
+
+    onChangeCallback(tasks: Array<Task>): void { };
 
     create(category: string, title: string, priority: number, estimate: number, spent: number): Task {
         var task = new Task(category, title, priority, estimate, spent);
-        this.tasks.push(task);
-        this.onChangeCallback && this.onChangeCallback(this.tasks);
+        this.pushTask(task);
+        this.onChangeCallback && this.onChangeCallback(this.getTasks());
         return task;
     }
 
@@ -19,7 +35,7 @@ class TaskManager {
     }
 
     get(i: number): Task {
-        return this.tasks[i];
+        return this.getTasks()[i];
     }
 
     getAll(activeOnly: boolean): Array<Task> {
@@ -32,39 +48,39 @@ class TaskManager {
 
     remove(task?: number | Task) {
         if (typeof task !== "number") {
-            for (var i = 0; i < this.tasks.length; i++) {
-                if (this.tasks[i] == task) {
+            for (var i = 0; i < this.getTasks.length; i++) {
+                if (this.getTasks[i] == task) {
                     task = i;
                     break;
                 }
 
             }
         }
-        if (typeof task === "number" && task >= 0 && task < this.tasks.length) {
-            this.tasks.splice(task, 1);
-            this.onChangeCallback && this.onChangeCallback(this.tasks);
+        if (typeof task === "number" && task >= 0 && task < this.getTasks.length) {
+            this.getTasks().splice(task, 1);
+            this.onChangeCallback && this.onChangeCallback(this.getTasks());
         }
     }
 
     editTask(task: Task, property: string, value?: string | number): void {
-        
+
         task[property] = value;
 
         var taskIndex: number;
-        for(var i =0; i < this.tasks.length;i++){
-            if(this.tasks[i] === task) taskIndex = i;
+        for (var i = 0; i < this.getTasks().length; i++) {
+            if (this.getTasks()[i] === task) taskIndex = i;
         }
-        this.tasks[taskIndex] = task;
+        this.getTasks()[taskIndex] = task;
 
-        this.onChangeCallback && this.onChangeCallback(this.tasks);
+        this.onChangeCallback && this.onChangeCallback(this.getTasks());
     }
 
     setCompleted(task, n): void {
         if (n >= 0 && n <= task.estimate) {
             task.spent = n;
             task.remaining = task.estimate - task.spent;
-            this.onChangeCallback && this.onChangeCallback(this.tasks);
-        } 
+            this.onChangeCallback && this.onChangeCallback(this.getTasks());
+        }
     }
 
     onChange(callback: (tasks: Array<Task>) => void): void {
@@ -73,9 +89,13 @@ class TaskManager {
 
     _filter(predicte: Function): Array<Task> {
         var matched: Array<Task> = [];
-        this.tasks.forEach(function (task) {
+        this.getTasks().forEach(function (task) {
             predicte(task) && matched.push(task);
         });
         return matched;
     }
+}
+
+function createTaskManager() {
+
 }

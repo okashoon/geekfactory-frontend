@@ -86,7 +86,6 @@ function createTaskRow(task: Task): HTMLElement {
             //editing category, title, priority and estimate
             for (var i = 0; i < inputs.length; i++) {
                 let input = <HTMLInputElement>inputs[i];
-                console.log(input.value);
                 taskManager.editTask(tempTask, input.name, input.value);
             }
             var completed = editForm.elements["completed"];
