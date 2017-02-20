@@ -42,7 +42,8 @@ function createTaskRow(task) {
     tr.appendChild(editButton);
     editButton.addEventListener('click', allowEdit);
     //creating a temporary task to change and send to task manager
-    var tempTask = {};
+    //tempTask is a real task to be able to put it in the editTask function
+    var tempTask = new Task("", "", 0, 0, 0);
     tempTask = task;
     function allowEdit(event) {
         //has to cast to form element to be able to use .elements on it
@@ -71,13 +72,15 @@ function createTaskRow(task) {
             e.preventDefault();
             //editing category, title, priority and estimate
             for (var i = 0; i < inputs.length; i++) {
-                taskManager.editTask(tempTask, inputs[i].name, inputs[i].value);
+                var input = inputs[i];
+                console.log(input.value);
+                taskManager.editTask(tempTask, input.name, input.value);
             }
             var completed = editForm.elements["completed"];
             //editing completed
             taskManager.setCompleted(tempTask, parseInt(completed.value));
             //clearing tempTask, and hiding the editForm
-            tempTask = {};
+            tempTask = new Task("", "", 0, 0, 0);
             editForm.setAttribute('style', 'display: none');
         }
     }
@@ -85,8 +88,8 @@ function createTaskRow(task) {
 }
 function createTableCell(value) {
     var td = document.createElement('td');
-    var value = document.createTextNode(value);
-    td.appendChild(value);
+    var text = document.createTextNode(value.toString());
+    td.appendChild(text);
     return td;
 }
 function loadTasks() {

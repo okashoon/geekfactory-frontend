@@ -34,7 +34,7 @@ function update(tasks: Array<Task>): void {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function createTaskRow(task: Task): void {
+function createTaskRow(task: Task): HTMLElement {
     var tr = document.createElement('tr');
     tr.appendChild(createTableCell(task.category));
     tr.appendChild(createTableCell(task.title));
@@ -55,8 +55,10 @@ function createTaskRow(task: Task): void {
 
     editButton.addEventListener('click', allowEdit);
     //creating a temporary task to change and send to task manager
-    var tempTask = {}
+    //tempTask is a real task to be able to put it in the editTask function
+    var tempTask = new Task("","",0,0,0);
     tempTask = task;
+    
     function allowEdit(event) {
         //has to cast to form element to be able to use .elements on it
         var editForm = <HTMLFormElement>document.querySelector('#edit-task')
@@ -83,13 +85,15 @@ function createTaskRow(task: Task): void {
             e.preventDefault();
             //editing category, title, priority and estimate
             for (var i = 0; i < inputs.length; i++) {
-                taskManager.editTask(tempTask, inputs[i].name, inputs[i].value);
+                let input = <HTMLInputElement>inputs[i];
+                console.log(input.value);
+                taskManager.editTask(tempTask, input.name, input.value);
             }
             var completed = editForm.elements["completed"];
             //editing completed
             taskManager.setCompleted(tempTask, parseInt(completed.value));
             //clearing tempTask, and hiding the editForm
-            tempTask = {};
+            tempTask = new Task("","",0,0,0);
             editForm.setAttribute('style', 'display: none');
         }
     }
@@ -98,10 +102,10 @@ function createTaskRow(task: Task): void {
 
 }
 
-function createTableCell(value) {
+function createTableCell(value?: string | number) {
     var td = document.createElement('td');
-    var value = document.createTextNode(value);
-    td.appendChild(value);
+    var text = document.createTextNode(value.toString());
+    td.appendChild(text);
     return td;
 }
 
