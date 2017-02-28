@@ -1,0 +1,25 @@
+<section>
+  <h2>Tasks:</h2>
+  <h3>You have {{tasks.length}} tasks</h3>
+  <table>
+    <thead>
+      <tr>
+        <td>Category</td>
+        <td>Title</td>
+        <td>Priority</td>
+        <td>Estimate</td>
+        <td>Delete</td>
+      </tr>
+    </thead>
+    <tbody id="tasks">
+      <tr *ngFor="let t of tasks">
+        <td>{{t.category}}</td>
+        <td>{{t.title}}</td>
+        <td>{{t.priority}}</td>
+        <td>{{t.estimate}}</td>
+        <td><button (click)="delete(t)">Delete</button></td>
+        <td><a routerLink="/edit/{{t.id}}" routerLinkActive="active">edit </a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>

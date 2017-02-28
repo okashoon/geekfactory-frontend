@@ -1,0 +1,9 @@
+<section >
+  <form (submit)="submit()">
+    <label><span>category: </span><input [(ngModel)]="task.category" name="category" type="text" required></label>
+    <label><span>Title: </span><input [(ngModel)]="task.title" name="title" type="text" required></label>
+    <label><span>Priority: </span><input [(ngModel)]="task.priority" name="priority" type="text" required></label>
+    <label><span>estimate: </span><input [(ngModel)]="task.estimate" name="estimate" type="text" required></label>
+    <input type="submit" value="add">
+  </form>
+</section>
